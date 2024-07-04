@@ -1,2 +1,3 @@
 # nekit
-my first site
+Мой первый сайт
+запускать index.html
