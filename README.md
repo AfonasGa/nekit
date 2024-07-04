@@ -1,2 +1,2 @@
 # nekit
-Мой первый сайт, запускать index.html
+afonasga.github.io/nekit/
