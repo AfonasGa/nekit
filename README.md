@@ -1,2 +1,2 @@
 # nekit
-afonasga.github.io/nekit/
+https://afonasga.github.io/nekit/
