@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-
-</head>
-    <title>nekit clicker</title>
+<head>
+    <title>ɴᴇᴋɪᴛ ᴄʟɪᴄᴋᴇʀ</title>
     <link rel="shortcut icon" href="./css/images/pack.png" type="image/x-icon">
-    <link rel="stylesheet" href="./css/index.css" width="250px">
+    <link rel="stylesheet" href="./css/clicker.css">
+</head>
 <body>
-<h1>Кликер</h1>
-<img src="./css/images/bread.png" alt="bread">
+    <div class="container">
+        <h1>ɴᴇᴋɪᴛ ᴄʟɪᴄᴋᴇʀ</h1>
+        <img src="./css/images/coin.png" alt="Click me!" id="clicker-image" width="250px">
+        <div class="counter">
+            <p>ᴄᴏɪɴ: <span id="click-count">0</span></p>
+        </div>
+    </div>
 
+    <script>
+        const clickerImage = document.getElementById('clicker-image');
+        const clickCount = document.getElementById('click-count');
+        let clicks = 0;
+
+        clickerImage.addEventListener('click', () => {
+            clicks++;
+            clickCount.textContent = clicks;
+        });
+    </script>
 </body>
 </html>
