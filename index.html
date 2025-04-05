@@ -1,32 +1,325 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <title>ɴᴇᴋɪᴛ</title>
-    <link rel="shortcut icon" href="./css/images/pack.png" type="image/x-icon">
-    <link rel="stylesheet" href="./css/index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nfcsound</title>
+    <style>
+        :root {
+            --primary-bg: linear-gradient(-45deg, #000000, #14213d, #1a2a5a, #000000);
+            --card-bg: rgba(0, 0, 0, 0.3);
+            --text-color: white;
+            --hover-effect: scale(1.02);
+            --active-effect: scale(0.98);
+            --border-radius: 15px;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: var(--primary-bg);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: Arial, sans-serif;
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(5px);
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        h1::before {
+            content: 'nfcsound';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: transparent;
+            -webkit-text-stroke: 2px;
+            -webkit-text-stroke-color: #1a2a5a;
+            background: linear-gradient(90deg, #0a1128, #1a2a5a, #0a1128);
+            background-size: 200% 200%;
+            animation: textStroke 5s ease infinite;
+            border-radius: var(--border-radius);
+            z-index: -1;
+            padding: 15px;
+            backdrop-filter: blur(5px);
+            text-shadow: 0 0 10px rgba(26, 42, 90, 0.7);
+        }
+
+        @keyframes textStroke {
+            0% {
+                -webkit-text-stroke-color: #0a1128;
+                background-position: 0% 50%;
+                text-shadow: 0 0 10px rgba(10, 17, 40, 0.7);
+            }
+            50% {
+                -webkit-text-stroke-color: #1a2a5a;
+                background-position: 100% 50%;
+                text-shadow: 0 0 15px rgba(26, 42, 90, 0.9);
+            }
+            100% {
+                -webkit-text-stroke-color: #0a1128;
+                background-position: 0% 50%;
+                text-shadow: 0 0 10px rgba(10, 17, 40, 0.7);
+            }
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            color: var(--text-color);
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: var(--hover-effect);
+            background: rgba(30, 58, 138, 0.5);
+        }
+
+        .btn:active {
+            transform: var(--active-effect);
+        }
+
+        .sections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 120px;
+            border: 1px solid rgba(56, 90, 194, 0.3);
+        }
+
+        .section-card:hover {
+            transform: var(--hover-effect);
+            box-shadow: 0 6px 20px rgba(56, 90, 194, 0.3);
+            border-color: rgba(56, 90, 194, 0.6);
+        }
+
+        .section-header {
+            flex-grow: 1;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .section-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: none;
+            background: rgba(30, 58, 138, 0.4);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .action-btn:hover {
+            background: rgba(30, 58, 138, 0.7);
+            transform: var(--hover-effect);
+        }
+
+        .action-btn:active {
+            transform: var(--active-effect);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 18px;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 100;
+            border: 1px solid rgba(56, 90, 194, 0.3);
+        }
+
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>nekit</h1>
-    </header>
-    
-    <main>
-        <section class="about">
-            <img src="./css/images/pack.png" alt="моя аватарка" width="250px">
-            <p>я некит</p>
-        </section>
+    <div class="container">
+        <h1 id="title">nfcsound</h1>
         
-        <section class="links">
-            <h2>Ссылки:</h2>
-                <li><a href="https://www.youtube.com/channel/UCAcPMnu0aPnTbUvMb39q1Hw" target="_blank">YouTube</a></li>
-                <li><a href="https://t.me/AfonasGa1" target="_blank">Telegram channel</a></li>
-                <li><a href="https://google.com" target="_blank">Google ссылка</a></li>
-                <li><a href="https://google.com">Google ссылка в окне</a></li>
-        </section>
-    </main>
+        <div class="buttons">
+            <a href="https://afonasga1.t.me/" class="btn" target="_blank">TG</a>
+        </div>
 
-    <footer>
-        <a href="./clicker.html" target="_blank">Кликер</a>
-    </footer>
+        <div id="sections-container">
+            <div class="loading">Загрузка разделов...</div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // Основные переменные
+        const sectionsContainer = document.getElementById('sections-container');
+        const notification = document.getElementById('notification');
+
+        // Функция для показа уведомления
+        function showNotification(message, duration = 2000) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => notification.classList.remove('show'), duration);
+        }
+
+        // Функция для копирования текста
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => showNotification('Ссылка скопирована!'))
+                .catch(err => console.error('Ошибка копирования:', err));
+        }
+
+        // Функция для загрузки списка разделов
+        async function loadSections() {
+            try {
+                const response = await fetch('start/index.json');
+                if (!response.ok) throw new Error('Не удалось загрузить index.json');
+                
+                const { folders } = await response.json();
+                if (!folders?.length) {
+                    sectionsContainer.innerHTML = '<div class="loading">Нет доступных разделов</div>';
+                    return;
+                }
+
+                // Загружаем названия разделов
+                const sections = await Promise.all(folders.map(async folder => {
+                    try {
+                        const txtResponse = await fetch(`start/${folder}/index.txt`);
+                        if (!txtResponse.ok) return null;
+                        const title = (await txtResponse.text()).trim();
+                        return {
+                            name: folder,
+                            title: title || folder,
+                            path: `start/${folder}/`
+                        };
+                    } catch (e) {
+                        console.error(`Ошибка загрузки раздела ${folder}:`, e);
+                        return null;
+                    }
+                });
+
+                displaySections(sections.filter(Boolean));
+            } catch (error) {
+                console.error('Ошибка загрузки разделов:', error);
+                sectionsContainer.innerHTML = '<div class="loading">Ошибка загрузки разделов</div>';
+            }
+        }
+
+        // Функция для отображения разделов
+        function displaySections(sections) {
+            if (!sections.length) {
+                sectionsContainer.innerHTML = '<div class="loading">Нет доступных разделов</div>';
+                return;
+            }
+
+            sectionsContainer.innerHTML = `
+                <div class="sections-grid">
+                    ${sections.map(section => `
+                        <div class="section-card">
+                            <div class="section-header">${section.title}</div>
+                            <div class="section-actions">
+                                <button class="action-btn open-btn" data-path="${section.path}index.html">
+                                    Открыть
+                                </button>
+                                <button class="action-btn copy-btn" data-path="${section.path}">
+                                    Скопировать
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            // Обработчики событий для кнопок
+            document.querySelectorAll('.open-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    window.location.href = btn.dataset.path;
+                });
+            });
+
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    copyToClipboard(new URL(btn.dataset.path, window.location.href).href);
+                });
+            });
+        }
+
+        // Загружаем разделы при загрузке страницы
+        loadSections();
+    </script>
 </body>
 </html>
