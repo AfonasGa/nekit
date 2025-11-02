@@ -3,54 +3,30 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <!-- Если у пользователя отключён JS, этот meta-refresh сделает редирект через 10 секунд -->
   <meta http-equiv="refresh" content="10;url=https://lttthedev.github.io/" />
-  <title>Переливание — редирект</title>
+  <title>Redirect</title>
+
+  <!-- iOS full-screen mode -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Redirect">
+
   <style>
-    /* Убираем отступы и делаем фон на весь экран */
     html, body {
       height: 100%;
       margin: 0;
-    }
-
-    /* Центрируем содержимое (если нужно показывать текст) */
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      /* начальный цвет */
-      background: #000000;
-      /* анимация: плавный переход между чёрным и серым, бесконечно, с чередованием */
+      background: #000;
       animation: shift 1.6s linear infinite alternate;
-      /* чтобы анимация была максимально плавной */
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Плавный переход от чёрного к серому */
     @keyframes shift {
-      from { background: #000000; }
-      to   { background: #777777; } /* серый, можно поменять на другой оттенок */
-    }
-
-    /* Небольшой ненавязчивый текст (по желанию можно удалить) */
-    .hint {
-      color: rgba(255,255,255,0.85);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      font-size: 16px;
-      background: rgba(0,0,0,0.25);
-      padding: 8px 12px;
-      border-radius: 8px;
-      backdrop-filter: blur(4px);
+      from { background: #000; }
+      to   { background: #777; }
     }
   </style>
 </head>
 <body>
-  <div class="hint" aria-hidden="true">Перенаправление через 10 секунд…</div>
-
   <script>
-    // Через 10 000 миллисекунд (10 секунд) выполняем редирект.
-    // Используем location.replace чтобы не оставлять эту страницу в истории (опционально).
     setTimeout(function() {
       window.location.replace('https://lttthedev.github.io/');
     }, 10000);
